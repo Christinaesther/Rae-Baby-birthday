@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Rae</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: url('pink_background.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        body::before {
+            content: '';
+            background: rgba(255, 182, 193, 0.6);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 90%;
+            width: 400px;
+            padding: 30px;
+            background-color: rgba(255, 240, 245, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(255, 20, 147, 0.3);
+            overflow: hidden;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: rgb(255, 105, 180);
+            text-shadow: 0 0 10px #ff69b4, 0 0 30px #ff69b4;
+        }
+
+        p {
+            font-size: 18px;
+            color: #d63384;
+        }
+
+        .next-page-btn {
+            margin-top: 20px;
+            font-size: 18px;
+            background-color: #ff69b4;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+        }
+
+        .next-page-btn:hover {
+            background-color: #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy Birthday, Rae! 💖</h1>
+        <p>
+            You're the kind of person who lights up every room you walk into. Your kindness, patience, and unwavering support have been a blessing in my life. You always know how to make people smile, even on their toughest days. Your laughter is contagious, and your caring heart makes everyone feel so loved.
+        </p>
+        <p>
+            You're my rock, my go-to person, and the one who understands me like no one else. Through every high and low, you've stood by me, never once letting me feel alone. Your endless encouragement and comforting words have pulled me through so many moments, and I can't thank you enough.
+        </p>
+        <p>
+            I admire your strength, your resilience, and the way you always find beauty in the simplest things. You're selfless, compassionate, and your positive spirit makes the world a brighter place. I’m beyond lucky to have you in my life.
+        </p>
+        <p>
+            Today, I celebrate not only your birthday but also the incredible soul that you are. May this year bring you as much joy and happiness as you’ve brought into my life. You deserve all the love in the world.
+        </p>
+        <h2>Happy Birthday, my dearest Rae! 💕</h2>
+        <button class="next-page-btn" id="nextBtn">Go to Page 2</button>
+    </div>
+
+    <script>
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            window.location.href = 'birthday2.html';
+        });
+    </script>
+</body>
+</html>

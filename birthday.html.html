@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loading Love</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6f2;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            flex-direction: column;
+            background: url('bg5.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .loading-container {
+            text-align: center;
+            position: relative;
+        }
+
+        .loading-text {
+            font-size: 2.5em;
+            color: #ff80bf;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .sticker {
+            width: 150px;
+            height: 150px;
+            background: url('sticker.png') no-repeat center center;
+            background-size: contain;
+            margin-bottom: 20px;
+        }
+
+        .loading-bar {
+            width: 250px;
+            height: 25px;
+            background-color: #ffd9e6;
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid #ff80bf;
+            box-shadow: 0 0 15px #ff99cc;
+        }
+
+        .loading-bar-fill {
+            width: 0;
+            height: 100%;
+            background-color: #ff66b3;
+            border-radius: 12px;
+            animation: fillAnimation 2s linear forwards;
+        }
+
+        @keyframes fillAnimation {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        button {
+            border: 3px solid #ff66b3;
+            padding: 1em 3em;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #ff80bf;
+            border-radius: 30px;
+            outline: none;
+            box-shadow: 0 0 15px #ff66b3, 0 0 40px #ff99cc;
+            text-shadow: 0 0 8px #ffe6f2;
+            transition: all 0.3s;
+            display: none;
+            opacity: 0;
+        }
+
+        button:hover {
+            background-color: #ff99cc;
+            color: #ffffff;
+            box-shadow: 0 0 20px #ff66b3, 0 0 50px #ff99cc;
+        }
+
+        @keyframes fadeInButton {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="sticker"></div>
+        <div class="loading-text">ITS LOADING LOVE . . . 💖</div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill"></div>
+        </div>
+        <button onclick="goToPage2()" id="nextBtn">Go to Page 2</button>
+    </div>
+
+    <script>
+        const nextBtn = document.getElementById('nextBtn');
+
+        document.querySelector('.loading-bar-fill').addEventListener('animationend', function() {
+            nextBtn.style.display = 'block';
+            nextBtn.style.animation = 'fadeInButton 1s forwards';
+        });
+
+        function goToPage2() {
+            document.body.classList.add('fade-out');
+            setTimeout(function() {
+                window.location.href = 'birthday1.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
