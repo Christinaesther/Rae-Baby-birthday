@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Cake Animation</title>
+
+    
+    <style>
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            background: url(bg5.jpg);
+            background-size: cover ;
+        }
+
+        @keyframes cakePopUp {
+            0% {
+                transform: scale(0); /* Start from a smaller size */
+                opacity: 0; /* Initially invisible */
+            }
+            60% {
+                transform: scale(1.1); /* Slightly larger than the original size */
+                opacity: 1; /* Fully visible */
+            }
+            100% {
+                transform: scale(1); /* Final size */
+            }
+        }
+
+        .cake {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            z-index: 2;
+            animation: cakePopUp 1s ease-out; /* Apply the animation */
+        }
+
+        .plate {
+            width: 250px;
+            height: 10px;
+            background-color: #ccc;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+
+        .layer {
+            width: 180px;
+            height: 100px;
+            background-color: #4682b4; /* Blue cake color */
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .icing {
+            width: 200px;
+            height: 20px;
+            background-color: #ffd700;
+            position: absolute;
+            bottom: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .candles {
+            position: absolute;
+            bottom: 130px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+        }
+
+        .candle {
+            width: 10px;
+            height: 40px;
+            background-color: #ff4500;
+            position: relative;
+            border-radius: 5px;
+        }
+
+        .candle::before {
+            content: '';
+            width: 15px;
+            height: 15px;
+            background-color: #ffd700; /* Fire color */
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50%;
+            animation: flicker 1.5s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .candle.blown::before {
+            background-color: #ccc; /* Fire turns gray when blown out */
+            animation: none; /* Remove flicker animation */
+            opacity: 0; /* Hide the fire */
+        }
+
+        /* Fireworks effect after all candles are blown */
+        .fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none; /* Initially hidden */
+            z-index: 1;
+        }
+
+        .firework-ball {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            opacity: 0;
+            transform-origin: center;
+            animation: firework-ball-animation 2s ease-out forwards;
+        }
+
+        .firework-ball-1 {
+            background-color: #ff00ff;
+        }
+
+        .firework-ball-2 {
+            background-color: #00ff00;
+        }
+
+        .firework-ball-3 {
+            background-color: #ffff00;
+        }
+
+        @keyframes firework-ball-animation {
+            0% {
+                opacity: 1;
+                transform: scale(1) translate(0, 0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2) translate(var(--random-x), var(--random-y));
+            }
+        }
+
+        /* Balloons */
+        .balloon {
+            position: absolute;
+            width: 30px;
+            height: 40px;
+            background-color: #ff6347; /* Balloon color */
+            border-radius: 50%;
+            animation: balloon-float 4s ease-in-out infinite;
+        }
+
+        .balloon-1 { background-color: #ff6347; } /* Red Balloon */
+        .balloon-2 { background-color: #40e0d0; } /* Turquoise Balloon */
+        .balloon-3 { background-color: #ff1493; } /* Pink Balloon */
+
+        @keyframes balloon-float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(0, -200px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Hearts */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff69b4;
+            clip-path: polygon(50% 0%, 0% 35%, 50% 100%, 100% 35%);
+            animation: heart-float 4s ease-in-out infinite;
+        }
+
+        @keyframes heart-float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(0, -250px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: #ff4500;
+            opacity: 0;
+            transition: opacity 1s;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="cake">
+        <div class="plate"></div>
+        <div class="layer"></div>
+        <div class="icing"></div>
+        <div class="candles">
+            <div class="candle" data-blown="false"></div>
+            <div class="candle" data-blown="false"></div>
+            <div class="candle" data-blown="false"></div>
+        </div>
+    </div>
+    <div class="message" id="birthdayMessage">Happy Birthday, my Rae! </div>
+
+    <div class="fireworks" id="fireworksContainer">
+        <!-- Firework balls will be created dynamically -->
+    </div>
+
+    <script>
+        const candles = document.querySelectorAll('.candle');
+        const birthdayMessage = document.getElementById('birthdayMessage');
+        const fireworksContainer = document.getElementById('fireworksContainer');
+
+        candles.forEach(candle => {
+            candle.addEventListener('click', () => {
+                if (candle.getAttribute('data-blown') === 'false') {
+                    candle.style.opacity = '1';
+                    candle.classList.add('blown');  // Blow out only the fire (candle stays visible)
+                    candle.setAttribute('data-blown', 'true');
+                    checkAllBlown();
+                }
+            });
+        });
+
+        function checkAllBlown() {
+            const allBlown = Array.from(candles).every(candle => candle.getAttribute('data-blown') === 'true');
+            if (allBlown) {
+                birthdayMessage.style.opacity = '1'; // Show the message box
+                triggerFireworks(); // Trigger fireworks effect
+            }
+        }
+
+        function triggerFireworks() {
+            fireworksContainer.style.display = 'block'; // Show fireworks container
+
+            // Generate random fireworks across the screen
+            for (let i = 0; i < 30; i++) {
+                createFireworkBall();
+            }
+
+            // Add random balloons and hearts to the screen
+            for (let i = 0; i < 10; i++) {
+                createBalloon();
+                createHeart();
+            }
+        }
+
+        function createFireworkBall() {
+            const fireworkBall = document.createElement('div');
+            const randomType = Math.floor(Math.random() * 3) + 1;
+            fireworkBall.classList.add('firework-ball', `firework-ball-${randomType}`);
+
+            // Randomize firework position and animation delay
+            const randomX = (Math.random() - 0.5) * 1000; // Random X direction
+            const randomY = (Math.random() - 0.5) * 1000; // Random Y direction
+
+            fireworkBall.style.setProperty('--random-x', `${randomX}px`);
+            fireworkBall.style.setProperty('--random-y', `${randomY}px`);
+            fireworkBall.style.animationDelay = `${Math.random() * 2}s`; // Random delay
+
+            fireworksContainer.appendChild(fireworkBall);
+        }
+
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            const balloonType = Math.floor(Math.random() * 3) + 1;
+            balloon.classList.add('balloon', `balloon-${balloonType}`);
+
+            // Randomize balloon position
+            const randomX = Math.random() * 100; // Random X direction
+            const randomY = Math.random() * 100; // Random Y direction
+            balloon.style.left = `${randomX}%`;
+            balloon.style.top = `${randomY}%`;
+
+            fireworksContainer.appendChild(balloon);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+
+            // Randomize heart position
+            const randomX = Math.random() * 100; // Random X direction
+            const randomY = Math.random() * 100; // Random Y direction
+            heart.style.left = `${randomX}%`;
+            heart.style.top = `${randomY}%`;
+
+            fireworksContainer.appendChild(heart);
+        }
+    </script>
+</body>
+</html>
